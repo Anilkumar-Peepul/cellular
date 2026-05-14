@@ -6,11 +6,24 @@ import fcntl
 import json
 import os
 # Set up logging
+# At the top, after imports
+script_dir = os.path.dirname(os.path.abspath(__file__))
+log_file = os.path.join(script_dir, "interface_switcher.log")
+
+# Configure logging
 logging.basicConfig(
-    filename="/var/log/interface_switcher.log",
+    filename=log_file,
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    filemode='a'
 )
+
+# Optional: Also log to console
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+console.setFormatter(formatter)
+logging.getLogger('').addHandler(console)
 #ssid = "Sedyam"  # Use the correct SSID
 #password = "Plough789"  # Use the correct password
 
