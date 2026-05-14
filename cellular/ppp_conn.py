@@ -7,6 +7,7 @@ import subprocess
 import atexit
 from gpiozero import OutputDevice
 import os
+import json
 import threading
 # ================= CONFIG =================
 CONFIG_PATH = os.path.join(
