@@ -1,0 +1,6 @@
+{
+  "uart": "/dev/ttyAMA0",
+  "baudrate": 115200,
+  "pwrkey_pin": 6,
+  "apn": "airteliot.com"
+}
