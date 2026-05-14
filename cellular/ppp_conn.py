@@ -7,7 +7,6 @@ import subprocess
 import atexit
 from gpiozero import OutputDevice
 import os
-from systemd.daemon import notify
 import threading
 # ================= CONFIG =================
 SERIAL_PORT = "/dev/ttyAMA0"
@@ -24,21 +23,7 @@ APN_MAP = {
 
 CURRENT_PID = os.getpid()
 pwr = None
-def watchdog_kick():
-    try:
-        notify("WATCHDOG=1")
-    except Exception:
-        pass
 
-
-def watchdog_thread():
-    while True:
-        watchdog_kick()
-        time.sleep(10)   # must be < WatchdogSec
-
-def start_watchdog():
-    t = threading.Thread(target=watchdog_thread, daemon=True)
-    t.start()
 # ============== CLEANUP ===================
 def cleanup():
     global pwr
@@ -389,7 +374,6 @@ def ping_test(ser):
 
 # ============== MAIN ======================
 def main():
-    #start_watchdog()
     if not ensure_module_on():
         print("[ERROR] Module OFF")
         return
