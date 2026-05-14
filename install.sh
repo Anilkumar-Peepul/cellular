@@ -15,9 +15,14 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # -----------------------------
+# FORCE IPV4
+# -----------------------------
+echo 'Acquire::ForceIPv4 "true";' > /etc/apt/apt.conf.d/99force-ipv4
+
+# -----------------------------
 # UPDATE SYSTEM
 # -----------------------------
-apt update -o Acquire::ForceIPv4=true
+apt update
 
 # -----------------------------
 # INSTALL PACKAGES
@@ -26,14 +31,39 @@ apt install -y \
     ppp \
     minicom \
     python3-pip \
+    python3-venv \
     network-manager \
     lsof \
     psmisc
 
 # -----------------------------
-# INSTALL PYTHON LIBRARIES
+# CREATE INSTALL DIRECTORY
 # -----------------------------
-pip3 install -r requirements.txt
+mkdir -p /home/pi/cellular
+
+# -----------------------------
+# COPY PROJECT FILES
+# -----------------------------
+cp -r cellular/* /home/pi/cellular/
+
+cp chatscripts/quectel-chat-connect /etc/chatscripts/
+cp chatscripts/quectel-chat-disconnect /etc/chatscripts/
+
+cp peers/quectel-ppp /etc/ppp/peers/
+
+cp config/config.json /home/pi/cellular/
+
+# -----------------------------
+# CREATE PYTHON VENV
+# -----------------------------
+python3 -m venv /home/pi/cellular/venv
+
+# -----------------------------
+# INSTALL PYTHON REQUIREMENTS
+# -----------------------------
+/home/pi/cellular/venv/bin/pip install --upgrade pip
+
+/home/pi/cellular/venv/bin/pip install -r requirements.txt
 
 # -----------------------------
 # ENABLE UART
@@ -44,30 +74,13 @@ grep -qxF 'enable_uart=1' $CONFIG_FILE || echo 'enable_uart=1' >> $CONFIG_FILE
 grep -qxF 'dtparam=uart0=on' $CONFIG_FILE || echo 'dtparam=uart0=on' >> $CONFIG_FILE
 grep -qxF 'dtoverlay=disable-bt' $CONFIG_FILE || echo 'dtoverlay=disable-bt' >> $CONFIG_FILE
 
-# Disable serial console
 systemctl disable serial-getty@ttyAMA0.service || true
 
 # -----------------------------
-# CREATE DIRECTORIES
+# COPY SERVICES
 # -----------------------------
-mkdir -p /home/pi/cellular
-mkdir -p /etc/chatscripts
-mkdir -p /etc/ppp/peers
-
-# -----------------------------
-# COPY FILES
-# -----------------------------
-cp -r cellular/* /home/pi/cellular/
-
-cp chatscripts/quectel-chat-connect /etc/chatscripts/
-cp chatscripts/quectel-chat-disconnect /etc/chatscripts/
-
-cp peers/quectel-ppp /etc/ppp/peers/
-
 cp services/quectel-ppp.service /etc/systemd/system/
 cp services/interface-switcher.service /etc/systemd/system/
-
-cp config/config.json /home/pi/cellular/
 
 # -----------------------------
 # PERMISSIONS
