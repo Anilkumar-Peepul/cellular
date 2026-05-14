@@ -1,8 +1,8 @@
 [Unit]
 Description=Network Interface Switcher Service
-
 After=network.target quectel-ppp.service
 Requires=quectel-ppp.service
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
