@@ -2,6 +2,7 @@
 Description=Quectel PPP Connection Service
 After=network.target
 Wants=network.target
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
