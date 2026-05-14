@@ -6,7 +6,7 @@ Wants=network.target
 [Service]
 Type=simple
 
-ExecStart=/home/pi/cellular/venv/bin/python /home/pi/cellular/ntw_switch.py
+ExecStart=/home/pi/cellular/venv/bin/python /home/pi/cellular/ppp_conn.py
 WorkingDirectory=/home/pi/cellular
 
 Restart=always
@@ -18,13 +18,8 @@ Group=root
 StandardOutput=journal
 StandardError=journal
 
-# Optional watchdog
-WatchdogSec=30
-
-# Kill previous child processes properly
 KillMode=control-group
 
-# Allow enough startup time
 TimeoutStartSec=60
 
 [Install]
