@@ -138,11 +138,6 @@ def restart_ppp_service():
 
     print("[PPP] Freeing GPIO if held...")
     free_gpiochip()
-
-    with GPIOLock():
-        print("[PPP] Toggling EC200 PWRKEY...")
-        output, success = run_command("python3 /usr/local/bin/pwrkey.py")
-        time.sleep(7)
     output, success = run_command("systemctl restart quectel-ppp.service")
     time.sleep(20)
 
