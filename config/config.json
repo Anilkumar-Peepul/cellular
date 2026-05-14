@@ -1,6 +1,23 @@
 {
-  "uart": "/dev/ttyAMA0",
-  "baudrate": 115200,
-  "pwrkey_pin": 6,
-  "apn": "airteliot.com"
+  "system": {
+    "user": "pi"
+  },
+
+  "uart": {
+    "port": "/dev/ttyAMA0",
+    "baudrate": 115200
+  },
+
+  "gpio": {
+    "pwrkey_pin": 6
+  },
+
+  "ppp": {
+    "peer": "quectel-ppp"
+  },
+
+  "wifi": {
+    "ssid": "YOUR_WIFI",
+    "password": "YOUR_PASSWORD"
+  }
 }
