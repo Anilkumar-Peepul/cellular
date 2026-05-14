@@ -1,0 +1,25 @@
+#/etc/ppp/peers/quectel-ppp
+hide-password
+noauth
+connect '/usr/sbin/chat -E -s -v -f /etc/chatscripts/quectel-chat-connect'
+disconnect '/usr/sbin/chat -E -s -v -f /etc/chatscripts/quectel-chat-disconnect'
+debug
+/dev/ttyAMA0
+115200
+#defaultroute
+#replacedefaultroute
+noipdefault
++ipv6
+ipv6cp-use-ipaddr
+ipcp-accept-local
+ipcp-accept-remote
+local
+lock
+dump
+nodetach
+crtscts
+remotename 3gppp
+ipparam 3gppp
+#usepeerdns
+lcp-echo-interval 60
+lcp-echo-failure 5
