@@ -335,4 +335,4 @@ if __name__ == "__main__":
     try:
         switch_interface()
     except KeyboardInterrupt:
- print("Script terminated by user.")
+        print("Script terminated by user.")
