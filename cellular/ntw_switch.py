@@ -31,12 +31,13 @@ logging.getLogger('').addHandler(console)
 def load_config():
     """Load config.json from same directory as script."""
     try:
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        config_path = os.path.join(base_path, "config.json")
-
-        with open(config_path, "r") as f:
+        CONFIG_PATH = os.path.join(
+            os.path.dirname(__file__),
+            "config.json"
+        )
+        
+        with open(CONFIG_PATH, "r") as f:
             config = json.load(f)
-
         return config
 
     except Exception as e:
