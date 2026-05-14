@@ -9,11 +9,21 @@ from gpiozero import OutputDevice
 import os
 import threading
 # ================= CONFIG =================
-SERIAL_PORT = "/dev/ttyAMA0"
-BAUDRATE = 115200
-TIMEOUT = 2
-PWRKEY_PIN = 6
-PPP_PEER = "quectel-ppp"
+CONFIG_PATH = os.path.join(
+    os.path.dirname(__file__),
+    "config.json"
+)
+
+with open(CONFIG_PATH, "r") as f:
+    config = json.load(f)
+
+SERIAL_PORT = config["uart"]["port"]
+BAUDRATE = config["uart"]["baudrate"]
+
+PWRKEY_PIN = config["gpio"]["pwrkey_pin"]
+
+PPP_PEER = config["ppp"]["peer"]
+
 APN_MAP = {
     "405854": ("jionet", "IPV4V6"),
     "40449": ("airteliot.com", "IP"),
