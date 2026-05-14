@@ -34,7 +34,11 @@ apt install -y \
     python3-venv \
     network-manager \
     lsof \
-    psmisc
+    psmisc \
+    pkg-config \
+    libsystemd-dev \
+    gcc \
+    python3-dev
 
 # -----------------------------
 # CREATE INSTALL DIRECTORY
